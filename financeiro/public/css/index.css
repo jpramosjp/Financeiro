@@ -1,0 +1,12 @@
+.custom-gradient {
+    background: rgb(70,112,97);
+    background: linear-gradient(130deg, rgba(70,112,97,1) 0%, rgba(0,62,41,1) 69%);
+}
+
+.fa-money-bill-trend-up {
+    background:  #ffff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
