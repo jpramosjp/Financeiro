@@ -20,4 +20,6 @@ Route::get('/', [UsuarioController::class, 'index'])
 Route::get('/cadastro', [UsuarioController::class,'cadastro'])
     ->name('form_cadastro_usuario');
 
-Route::post('/cadastro',[UsuarioController::class, 'criarUsuario']);
+Route::post('/cadastro', [UsuarioController::class, 'criarUsuario']);
+
+Route::post('/', [UsuarioController::class, 'logar']);

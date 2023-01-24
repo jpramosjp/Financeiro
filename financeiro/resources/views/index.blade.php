@@ -1,22 +1,16 @@
 @extends('layout_login')
 
-@section('mensagem')
-    @if(!empty($mensagem))
-        <div id="alerta_sucesso" class="fixed-top alert alert-success text-center" role="alert">
-            {{$mensagem}}
-        </div>
-    @endif
-@endsection
 
 @section('formulario')
+@csrf
 <div class="mb-1">
-    <input class="form-control" type="text" placeholder="Nome de Usuario">
+    <input id="nome_acesso" class="form-control" type="text" name="nome_acesso" placeholder="Nome de Usuario">
 </div>
 <div class="mb-2">
-    <input class="form-control" type="text" placeholder="Senha">
+    <input id="senha_acesso" class="form-control" type="password" name="senha" placeholder="Senha">
 </div>
 <div class="mb-2">
-    <button class="w-100 btn btn-lg btn-success" type="submit"><i class="fa-solid fa-right-to-bracket mx-1"></i> Entrar</button>
+    <button class="w-100 btn btn-lg btn-success" type="submit" onclick="validaPesquisa()"><i class="fa-solid fa-right-to-bracket mx-1"></i> Entrar</button>
 </div>
 <div class="mb-2">
     <a class="w-100 btn btn-lg btn-secondary" href="{{ route('form_cadastro_usuario') }}" ><i class="fa-solid fa-user mx-1"></i>Cadastro</a>
