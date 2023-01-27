@@ -9,4 +9,30 @@
     -webkit-text-fill-color: transparent;
 }
 
+.opcoes-cima {
+    position: absolute; 
+    inset: auto auto 0px 0px; margin: 0px; 
+    transform: translate(0px, -25px);
+}
 
+.botao-menu {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .menu-lateral {
+        position: absolute;
+        left: -1000px;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .botao-menu {
+        display: block;
+    }
+  }
+
+  .menu-lateral.menu-visivel {
+    position: static;
+    left: 0;
+    transition: all 0.5s ease-in-out;
+}

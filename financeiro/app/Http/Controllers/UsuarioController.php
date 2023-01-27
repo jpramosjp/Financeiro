@@ -19,16 +19,17 @@ class UsuarioController extends Controller
     }
 
     public function logar(Request $request) {
-        echo $request->input('nome_acesso');
         if(empty($request->input('nome_acesso')) || empty($request->input('senha'))) {
             SessaoController::mensagemSessao($request, ["mensagem" => "Por favor preencha todos os campos", "classe" => "alert-danger", "display" => "block"]);
             return redirect()->route("login");
         }
-        $usuario = User::where('nome_acesso', $request->input('nome_acesso'))->first(); 
+        $usuario = User::where('nome_acesso', $request->input('nome_acesso'))->first();
         if(empty($usuario) || !Hash::check($request->input('senha'), $usuario->senha)) {
             SessaoController::mensagemSessao($request, ["mensagem" => "Usuario ou senha inválido", "classe" => "alert-danger", "display" => "block"]);
             return redirect()->route("login");
         }
+        SessaoController::criarSessaoUsuario($request, ["usuario" => $usuario, "data_entrada" => \Carbon\Carbon::now()->format('Y-m-d H:i:s')]);
+        return redirect()->route('sistema');
         
     }
 

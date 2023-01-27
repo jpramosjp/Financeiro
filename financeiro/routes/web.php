@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SistemaController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,16 @@ Route::get('/cadastro', [UsuarioController::class,'cadastro'])
 Route::post('/cadastro', [UsuarioController::class, 'criarUsuario']);
 
 Route::post('/', [UsuarioController::class, 'logar']);
+
+Route::get('/sistema',[SistemaController::class, 'index'])
+    ->name('sistema');
+
+Route::post('/logout',[UsuarioController::class, 'logout'])
+    ->name('logout');
+
+
+Route::get('/sistema.receitas', [SistemaController::class, 'receita'])
+    ->name('controle_receita');
+
+Route::get('/sistema.despesa', [SistemaController::class, 'despesa'])
+    ->name('controle_despesa');

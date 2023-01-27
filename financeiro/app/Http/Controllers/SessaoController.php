@@ -14,10 +14,20 @@ class SessaoController extends Controller
     public function mensagemSessao(Request $request, $parametros) {
         foreach($parametros as $indice => $valor) {
             $request->session()
-            ->flash(
-                $indice, $valor
-            );
+                    ->flash(
+                        $indice, $valor
+                    );
         }
         return true;
     }
+
+    public function criarSessaoUsuario(Request $request, $parametros) {
+        foreach($parametros as $indice => $valor) {
+            $request->session()
+                    ->put(
+                        $indice, $valor
+                    );
+        }
+    }
+
 }

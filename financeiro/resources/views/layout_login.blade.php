@@ -1,5 +1,6 @@
 @extends('layout')
 @section('conteudo')
+
     <div id="alerta" class="fixed-top alert {{$classe}} text-center" role="alert" style="display: {{$display}};">
             {{$mensagem}}
     </div>
