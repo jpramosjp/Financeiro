@@ -8,14 +8,15 @@ use Carbon\Carbon;
 class DespesaRepo
 {
 
-    public static function receitasUsuario($usuario) {
+    public static function despesaUsuario($usuario) {
         return DB::connection('pgsql')
             ->select(DB::raw("
             SELECT
                 A.codigo,
                 A.valor,
-                B.descricao as tipo_receita,
-                (SELECT count(0) FROM despesa x WHERE x.tipo_despesa = B.codigo) as quantidade_receita
+                B.descricao as tipo_despesa,
+                (SELECT count(0) FROM despesa x WHERE x.tipo_despesa = B.codigo) as quantidade_despesa,
+                B.cor
             FROM 
                 despesa A
             INNER JOIN

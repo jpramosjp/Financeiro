@@ -37,3 +37,6 @@ Route::get('/sistema.receitas', [SistemaController::class, 'receita'])
 
 Route::get('/sistema.despesa', [SistemaController::class, 'despesa'])
     ->name('controle_despesa');
+
+Route::get('/sistema.dinheiro', [SistemaController::class, 'dinheiro'])
+    ->name('controle_dinheiro');
