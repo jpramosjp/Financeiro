@@ -37,3 +37,8 @@
     left: 0;
     transition: all 0.5s ease-in-out;
 }
+
+.cardinho {
+    max-height: 200px;
+    overflow-y: scroll;
+  }
