@@ -2,8 +2,10 @@
 
 @section('dados')
             <!-- Content Wrapper -->
-
-
+<form id="formOption" method="post">
+    <input type="hidden" name="mesEscolhido" id="mesEscolhido">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+</form>
 <!-- Main Content -->
 <div id= "dados_pie" style="visibility: hidden;">
 @php
@@ -23,6 +25,14 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                <select id="selectMes" class="form-select form-control-sm w-100 ">
+                    @foreach($mesesSelect as $key => $valor)
+                        @php
+                            $select = ($valor['mes'] == $mesEscolhido) ? 'selected' : '';
+                        @endphp
+                        <option {{$select}} value="{{$valor['mes']}}">{{strtoupper($valor['nome'])}}</option>
+                    @endforeach
+                </select>
         </div>
 
         <!-- Content Row -->
@@ -122,21 +132,7 @@
                     <!-- Card Header - Dropdown -->
                     <div
                         class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                        <div class="dropdown no-arrow">
-                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                aria-labelledby="dropdownMenuLink">
-                                <div class="dropdown-header">Dropdown Header:</div>
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </div>
+                        <h6 class="m-0 font-weight-bold">Grafico de Gasto por tipo de Despesa</h6>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
@@ -185,85 +181,11 @@
                     </div>
                     <div class="card-body">
                     <div class="table-responsive d-flex flex-wrap">
-                        <div class="card m-3">
-                            <div class="card-header" style="background-color: #ff0000;">
-                                <h6>Título do Card 1</h6>
-                            </div>
-                            <div class="card-body overflow-y-scroll">
-                            <table class="table table-striped table-bordered">
-                            <tr>
-                                <td>Nome</td>
-                                <td>Valor</td>
-                                <td>Vencimento</td>
-                            </tr>
-                            <tr>
-                                <td>Lanche</td>
-                                <td>R$17</td>
-                                <td>02/02/2023</td>
-                            </tr>
-                            </table>
-                            </div>
-                        </div>
-                        <div class="card m-3">
-                            <div class="card-header">
-                                <h6>Título do Card 2</h6>
-                            </div>
-                            <div class="card-body overflow-y-scroll">
-                            <table class="table table-striped table-bordered">
-                            <tr>
-                                <td>Nome</td>
-                                <td>Valor</td>
-                                <td>Vencimento</td>
-                            </tr>
-                            <tr>
-                                <td>Lanche</td>
-                                <td>R$17</td>
-                                <td>02/02/2023</td>
-                            </tr>
-                            </table>
-                            </div>
-                        </div>
-                        <div class="card m-3">
-                            <div class="card-header">
-                                <h6>Título do Card 3</h6>
-                            </div>
-                            <div class="card-body overflow-y-scroll">
-                            <table class="table table-striped table-bordered">
-                            <tr>
-                                <td>Nome</td>
-                                <td>Valor</td>
-                                <td>Vencimento</td>
-                            </tr>
-                            <tr>
-                                <td>Lanche</td>
-                                <td>R$17</td>
-                                <td>02/02/2023</td>
-                            </tr>
-                            </table>
-                            </div>
-                        </div>
-                        <div class="card m-3">
-                            <div class="card-header">
-                                <h6>Título do Card 3</h6>
-                            </div>
-                            <div class="card-body overflow-y-scroll">
-                            <table class="table table-striped table-bordered">
-                            <tr>
-                                <td>Nome</td>
-                                <td>Valor</td>
-                                <td>Vencimento</td>
-                            </tr>
-                            <tr>
-                                <td>Lanche</td>
-                                <td>R$17</td>
-                                <td>02/02/2023</td>
-                            </tr>
-                            </table>
-                            </div>
-                        </div>
-                        <div class="card  m-3">
-                            <div class="card-header">
-                                <h6>Título do Card 3</h6>
+                    @foreach($tipoDespesa as $key => $valor)
+                      
+                        <div class="card m-3 dados_despesa">
+                            <div class="card-header nome_despesa" style="background-color: {{$valor[1]}};">
+                                <h6>{{$key}}</h6>
                             </div>
                             <div class="card-body cardinho">
                             <table class="table table-striped table-bordered">
@@ -272,46 +194,19 @@
                                 <td>Valor</td>
                                 <td>Vencimento</td>
                             </tr>
-                            <tr>
-                                <td>Lanche</td>
-                                <td>R$17</td>
-                                <td>02/02/2023</td>
-                            </tr>
-                            <tr>
-                                <td>Lanche</td>
-                                <td>R$17</td>
-                                <td>02/02/2023</td>
-                            </tr>
-                            <tr>
-                                <td>Lanche</td>
-                                <td>R$17</td>
-                                <td>02/02/2023</td>
-                            </tr>
-                            <tr>
-                                <td>Lanche</td>
-                                <td>R$17</td>
-                                <td>02/02/2023</td>
-                            </tr>
-                            <tr>
-                                <td>Lanche</td>
-                                <td>R$17</td>
-                                <td>02/02/2023</td>
-                            </tr>
-                            <tr>
-                                <td>Lanche</td>
-                                <td>R$17</td>
-                                <td>02/02/2023</td>
-                            </tr>
-                            <tr>
-                                <td>Lanche</td>
-                                <td>R$17</td>
-                                <td>02/02/2023</td>
-                            </tr>
+                            @foreach($cadaDespesaUsuario as $dado)
+                                @if($dado->nome_tipo_despesa == $key)
+                                    <tr>
+                                        <td>{{$dado->nome_despesa}}</td>
+                                        <td class="valores_despesa">R$ {{number_format($dado->valor, 2, ',', '.')}}</td>
+                                        <td>{{$dado->data_vencimento}}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
                             </table>
                             </div>
                         </div>
-                    </div>
-                    </div>
+                    @endforeach    
                 </div>
 
                 

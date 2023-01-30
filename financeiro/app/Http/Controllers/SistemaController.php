@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\ReceitasRepo;
 use App\Repositories\DespesaRepo;
 use Illuminate\Support\Facades\Number;
+use App\Models\Meses;
 
 
 use Illuminate\Http\Request;
@@ -17,6 +18,17 @@ class SistemaController extends Controller
         if(empty($usuario)) {
             return redirect()->route("login");
         }
+        $meses = Meses::get();
+        $mesEscolhido = empty($request->input('mesEscolhido')) ? date('m') : $request->input('mesEscolhido');
+        $mesesSelect = [];
+        $periodoVencimento = '';
+        foreach($meses as $dados) {
+            if($mesEscolhido == date('m', strtotime($dados->inicio)) ){
+                $periodoVencimento = "'" . $dados->inicio . "' AND '" . $dados->fim . "'";
+            }
+            $mesesSelect[] =["mes" => date('m', strtotime($dados->inicio)), "nome" => $dados->nome]; 
+        }
+
         $receitasRepo = new ReceitasRepo;
         $despeRepo = new DespesaRepo;
         $menu = Menu::query()
@@ -26,8 +38,13 @@ class SistemaController extends Controller
         $imagemUsuario = !empty($usuario->imagem_usuario) ?" <img src='" . $usuario->imagem_usuario . "' alt='' width='32' height='32' class='rounded-circle me-2'>" : '<i class="fa-solid fa-user me-2"></i>';
 
         $retornoReceitas = $receitasRepo->receitasUsuario($usuario->codigo);
-        $retornoDespesa = $despeRepo->despesaUsuario($usuario->codigo);
+        $retornoDespesa = $despeRepo->despesaUsuario($usuario->codigo, $periodoVencimento);
         $totalReceita = $totalDespesa = 0.00;
+        $codigoDespesa = [];
+        $cadaDespesaUsuario = [];
+        $tipoDespesa = [];
+        $tiposReceitas = [];
+        $porcentagemDespesaReceita = 0;
         if(!empty($retornoReceitas) && !empty($retornoDespesa)) {
             foreach($retornoReceitas as $dados) {
                 $totalReceita += $dados->valor;
@@ -36,12 +53,19 @@ class SistemaController extends Controller
             foreach($retornoDespesa as $dados) {
                 $totalDespesa += $dados->valor;
                 $tipoDespesa[$dados->tipo_despesa] = [$dados->quantidade_despesa, $dados->cor];
+                $codigoDespesa[]= $dados->codigo_despesa; 
             }
+            $porcentagemDespesaReceita =  round(($totalDespesa * 100)/ $totalReceita, 2);
+            $totalReceita = number_format($totalReceita, 2, ',', '.');
+            $totalDespesa = number_format($totalDespesa, 2, ',', '.');
+            $cadaDespesaUsuario = $despeRepo->cadaDespesaUuario($usuario->codigo, implode("," ,array_unique($codigoDespesa)), $periodoVencimento);
         }
-        $porcentagemDespesaReceita = round(($totalDespesa * 100)/ $totalReceita, 2);
-        $totalReceita = number_format($totalReceita, 2, ',', '.');
-        $totalDespesa = number_format($totalDespesa, 2, ',', '.');
+       
         
-        return view("sistema.index", compact("nomeAcesso", "imagemUsuario", "menu", "totalReceita", 'tiposReceitas', "totalDespesa", "tipoDespesa", "porcentagemDespesaReceita"));
+        return view("sistema.index", compact("nomeAcesso", "imagemUsuario", "menu", "totalReceita", 'tiposReceitas', "totalDespesa", "tipoDespesa", "porcentagemDespesaReceita", "cadaDespesaUsuario", 'mesEscolhido', 'mesesSelect'));
+    }
+
+    public function atualizar(Request $request) {
+        echo 'teste';
     }
 }

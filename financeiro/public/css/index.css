@@ -18,6 +18,13 @@
 .botao-menu {
     display: none;
 }
+.no-data-menu {
+    height: 100vh;
+}
+.no-data {
+    height: 100vh;
+    width: 100vw;
+}
 
 @media (max-width: 768px) {
     .menu-lateral {
@@ -30,13 +37,15 @@
     .botao-menu {
         display: block;
     }
+
   }
 
   .menu-lateral.menu-visivel {
     position: static;
     left: 0;
     transition: all 0.5s ease-in-out;
-}
+    
+    }
 
 .cardinho {
     max-height: 200px;

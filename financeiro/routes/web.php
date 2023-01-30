@@ -28,6 +28,8 @@ Route::post('/', [UsuarioController::class, 'logar']);
 Route::get('/sistema',[SistemaController::class, 'index'])
     ->name('sistema');
 
+Route::post('/sistema',[SistemaController::class, 'index']);
+
 Route::post('/logout',[UsuarioController::class, 'logout'])
     ->name('logout');
 

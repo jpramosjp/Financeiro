@@ -1,6 +1,6 @@
 @extends('layout')
 @section('conteudo')
-<div class="d-flex">
+<div class="d-flex" id="div_principal" >
     <div id= "menu-lateral" class="d-flex flex-column flex-shrink-0 p-3 text-white custom-gradient menu-lateral " style="width: 280px;">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <i class="fa-solid fa-money-bill-trend-up fa-2x p-1"></i>
@@ -8,7 +8,7 @@
         </a>
         <hr>
 
-        <ul class="nav nav-pills flex-column mb-auto">
+        <ul class="nav nav-pills flex-column mb-auto no-data-menu">
             <li class="nav-item">
             @foreach($menu as $valores)
                 @php $classe = "text-white"; @endphp
@@ -35,7 +35,7 @@
         </ul>
         </div>
     </div>
-    <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content-wrapper" class="d-flex flex-column no-data">
         <div id="content">
         
         <!-- Topbar -->
