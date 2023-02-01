@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use App\Repositories\ReceitasRepo;
 use App\Repositories\DespesaRepo;
 use Illuminate\Support\Facades\Number;
+use App\Http\Controllers\Menucontroller;
 use App\Models\Meses;
 
 
 use Illuminate\Http\Request;
-use App\Models\Menu;
+
 
 class SistemaController extends Controller
 {
     public function index(Request $request) {
-        $usuario = $request->session()->get('usuario');
+        $usuario = Menucontroller::dadosUsuario($request);
         if(empty($usuario)) {
             return redirect()->route("login");
         }
@@ -31,11 +32,7 @@ class SistemaController extends Controller
 
         $receitasRepo = new ReceitasRepo;
         $despeRepo = new DespesaRepo;
-        $menu = Menu::query()
-        ->orderBy('codigo')
-        ->get();
-        $nomeAcesso = $usuario->nome;
-        $imagemUsuario = !empty($usuario->imagem_usuario) ?" <img src='" . $usuario->imagem_usuario . "' alt='' width='32' height='32' class='rounded-circle me-2'>" : '<i class="fa-solid fa-user me-2"></i>';
+        $menu = Menucontroller::montarMenu($request);
 
         $retornoReceitas = $receitasRepo->receitasUsuario($usuario->codigo);
         $retornoDespesa = $despeRepo->despesaUsuario($usuario->codigo, $periodoVencimento);
@@ -62,7 +59,7 @@ class SistemaController extends Controller
         }
        
         
-        return view("sistema.index", compact("nomeAcesso", "imagemUsuario", "menu", "totalReceita", 'tiposReceitas', "totalDespesa", "tipoDespesa", "porcentagemDespesaReceita", "cadaDespesaUsuario", 'mesEscolhido', 'mesesSelect'));
+        return view("sistema.index", compact("usuario", "menu", "totalReceita", 'tiposReceitas', "totalDespesa", "tipoDespesa", "porcentagemDespesaReceita", "cadaDespesaUsuario", 'mesEscolhido', 'mesesSelect'));
     }
 
     public function atualizar(Request $request) {

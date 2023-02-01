@@ -1,18 +1,16 @@
 
 $(document).ready(function() {
-    $("#botao-menu").click(function() {
-      $("#menu-lateral").toggleClass("menu-visivel");
-    });
+
 
     if (window.innerWidth < 768) {
         document.getElementById("menu-lateral").classList.remove("no-data-menu");
         document.getElementById("content-wrapper").classList.remove("no-data");
       }
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $("#selectMes").change(function(){
         var selectedOption = $(this).val();
         $("#mesEscolhido").val(selectedOption);

@@ -25,8 +25,8 @@
         <hr>
         <div class="dropup">
         <a id="seta_usuario" href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" onclick="mostarOpcoes()">
-        {!! $imagemUsuario !!}
-            <strong>{{$nomeAcesso}}</strong>
+        {!! $usuario->imagem_usuario !!}
+            <strong>{{$usuario->nome}}</strong>
         </a>
         <ul id="opcoes_usuario" class="dropdown-menu dropdown-menu-dark text-small shadow"  aria-labelledby="dropdownUser1">
             <li><a class="dropdown-item" href="#">Perfil</a></li>
@@ -93,4 +93,5 @@
 @section('links')
 <script src="{{ asset('js/sistema.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+@yield('links')
 @endsection

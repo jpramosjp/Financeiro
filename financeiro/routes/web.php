@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\SistemaController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\Receitascontroller;
+use App\Models\Receitas;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,8 +36,12 @@ Route::post('/logout',[UsuarioController::class, 'logout'])
     ->name('logout');
 
 
-Route::get('/sistema.receitas', [SistemaController::class, 'receita'])
+Route::get('/sistema.receitas', [Receitascontroller::class, 'index'])
     ->name('controle_receita');
+
+Route::post('/atualizar_receitas', [Receitascontroller::class, 'atualizarReceita'])
+    ->name('atualizar_receitas');
+
 
 Route::get('/sistema.despesa', [SistemaController::class, 'despesa'])
     ->name('controle_despesa');
