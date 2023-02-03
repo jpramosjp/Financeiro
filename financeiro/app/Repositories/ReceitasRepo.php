@@ -15,6 +15,7 @@ class ReceitasRepo
             SELECT
                 A.codigo,
                 A.valor,
+                A.data_inserido,
                 coalesce(B.descricao, A.descricao) as tipo_receita,
                 coalesce(B.codigo, 0) as codigo_tipo_receita,
                 (SELECT count(0) FROM receitas x WHERE x.tipo_receita = B.codigo) as quantidade_receita
@@ -31,7 +32,7 @@ class ReceitasRepo
             "));
     }
 
-    public static function tiposReceitas() {
+    public static function tiposReceitas($where = '') {
         return DB::connection('pgsql')
             ->select(DB::raw("
             SELECT
@@ -39,6 +40,23 @@ class ReceitasRepo
                 A.descricao as nome
             FROM 
                 tipo_receita A
+            $where
             "));
     }
+
+    public static function criarOuAtualizar($params) {
+        return Receitas::updateOrCreate([
+            "codigo" => isset($params['codigo']) ? $params['codigo'] : '0',
+            "usuario" => $params['usuario']
+        ],
+        [
+            "usuario" => $params['usuario'],
+            "tipo_receita" => $params['tipo_receita'],
+            "descricao" => $params['descricao'],
+            "valor" => $params['valor'],
+            "data_inserido" => \Carbon\Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+    }
+
+
 }

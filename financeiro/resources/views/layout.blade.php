@@ -16,6 +16,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script src="{{ asset('js/funcoes.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 @yield('links')
 </body>
 </html>

@@ -8,12 +8,29 @@ $(document).ready(function(){
  });
 
 function alerta() {
-    console.log("opa")
+    $("#alerta").css("display", "block");
+    $("#alerta").css("opacity", 1);
     $("#alerta").animate({ opacity: 0 }, 5000, function() {
-                   $(this).remove();
-               });
+        $(this).css("display", "none");
+        $(this).removeClass("alert-success");
+    });
+
+    return true;
+
 }
 
-function formatNumber(obj, num) {
-    return $(obj).val(Number(num).toLocaleString("pt-BR", {style: "currency", currency: "BRL"}));
-}
+function formataValor(campo) {
+    valor = campo.value;
+    valor = valor.replace(/[^0-9]/gm, "");
+    if (!valor.length) {
+        campo.value = "";
+        return true;
+    }
+    valor = valor.toString();
+    contador = valor.length;
+    if (contador > 2) {
+        valor = valor.substring(0, (contador - 2)) + "," + valor.substr(-2);
+    }
+    campo.value = valor;
+    return true;
+};

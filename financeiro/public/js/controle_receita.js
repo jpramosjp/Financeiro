@@ -49,23 +49,56 @@ $(document).ready(function(){
     e.preventDefault();
     const tr = $(this).closest('tr');
     const inputs = tr.find('input[type="text"]');
+    const codigoReceita = tr.find(".codigo_tipo_receita").val();
     const codigo = tr.data("receita-id");
-     const tipo_receita = inputs.first().val();
-     const valor = parseFloat(inputs.last().val().replace("R$ ", "").replace(".", "").replace(",", "."));
-     console.log(codigo);
-     console.log(tipo_receita);
-     console.log(valor);
+    const tipoReceita = inputs.first().val();
+    var valor = inputs.last().val()
+    
+    
+    var usuario = $("#codigo_usuario").val();
+    console.log(valor);
+    valor = parseFloat(valor.replace("R$ ", "").replace(".", "").replace(",", "."));
+    if((tr.find('.tipo_receita_antigo').val() == tipoReceita) && (valor == parseFloat(tr.find('.valor_antigo').val().replace("R$ ", "").replace(".", "").replace(",", ".")))) {
+        return true;
+    }
 
-    $.ajax({
+     $.ajax({
         type: 'POST',
-        url: "/atualizar_receitas",
-        data: { "valor": tipo_receita},
-        success: function(response) {  
-            console.log(response.msg);
+        url: $("#url").val(),
+        data: {
+            "codigo": codigo,
+            "codigoReceita": codigoReceita,
+            "tipoReceita": tipoReceita,
+            "valor": valor,
+            "usuario": usuario
+        },
+        success: function (response) {
+            $("#alerta").addClass(response.classe);
+            $("#alerta").text(response.mensagem);
+            alerta();
+            if(response.sucesso == 1) {
+                tr.find('.tipo_receita_antigo').val(tipoReceita)
+                tr.find('.valor_antigo').val(formataValor(tr.find('.valor_antigo')));
+                inputs.prop('readonly', true);
+                inputs.css('pointer-events', 'none');
+            
+                tr.find('.btn-secondary').text('Excluir');
+                tr.find('.btn-secondary').removeClass('btn-secondary').addClass('btn-danger');
+            
+                tr.find('.btn-success').text('Editar');
+                tr.find('.btn-success').removeClass('btn-success').addClass('btn-primary').removeClass('salvarEdicoes');
+            }
+            
+        },
+        error: function (error) {
+          console.log(error);
         }
-    });
+      });
   
 
  });
 });
 
+function layoutNormal(inputs) {
+   
+}

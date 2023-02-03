@@ -39,8 +39,15 @@ Route::post('/logout',[UsuarioController::class, 'logout'])
 Route::get('/sistema.receitas', [Receitascontroller::class, 'index'])
     ->name('controle_receita');
 
-Route::post('/atualizar_receitas', [Receitascontroller::class, 'atualizarReceita'])
+Route::post('/sistema.receitas', [Receitascontroller::class, 'inserirReceita'])
+->name('inserir_receita');
+
+
+Route::post('/sistema.inserirReceita', [Receitascontroller::class, 'atualizarReceita'])
     ->name('atualizar_receitas');
+
+Route::delete('/sistema.receitas/{codigo}', [Receitascontroller::class, 'destroy'])
+        ->name("deletar");
 
 
 Route::get('/sistema.despesa', [SistemaController::class, 'despesa'])

@@ -1,6 +1,9 @@
 @extends('layout')
 @section('conteudo')
 <div class="d-flex" id="div_principal" >
+<div id="alerta" class="fixed-top alert {{$classe}} text-center" role="alert" style="display: {{$display}};">
+            {{$mensagem}}
+</div>
     <div id= "menu-lateral" class="d-flex flex-column flex-shrink-0 p-3 text-white custom-gradient menu-lateral " style="width: 280px;">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <i class="fa-solid fa-money-bill-trend-up fa-2x p-1"></i>
@@ -24,6 +27,7 @@
         </ul>
         <hr>
         <div class="dropup">
+            <input type="hidden" id="codigo_usuario" value="{{$usuario->codigo}}">
         <a id="seta_usuario" href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" onclick="mostarOpcoes()">
         {!! $usuario->imagem_usuario !!}
             <strong>{{$usuario->nome}}</strong>

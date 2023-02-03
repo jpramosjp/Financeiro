@@ -13,10 +13,9 @@ class Receitas extends Model
     protected $fillable = [
         'usuario',
         'valor',
-        'senha',
-        'cliente',
-        'imagem_usuario',
-        'data_nascimento'
+        'tipo_receita',
+        'data_inserido',
+        'descricao'
     ];
     
     public $timestamps = false;

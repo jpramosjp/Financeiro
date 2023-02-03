@@ -19,6 +19,9 @@ class SistemaController extends Controller
         if(empty($usuario)) {
             return redirect()->route("login");
         }
+        $mensagem = !empty($request->session()->get('mensagem')) ? $request->session()->get('mensagem') : '';
+        $classe = !empty($request->session()->get("classe")) ? $request->session()->get("classe") : '';
+        $display = !empty($request->session()->get('display')) ? $request->session()->get("display") : 'none';
         $meses = Meses::get();
         $mesEscolhido = empty($request->input('mesEscolhido')) ? date('m') : $request->input('mesEscolhido');
         $mesesSelect = [];
@@ -59,10 +62,8 @@ class SistemaController extends Controller
         }
        
         
-        return view("sistema.index", compact("usuario", "menu", "totalReceita", 'tiposReceitas', "totalDespesa", "tipoDespesa", "porcentagemDespesaReceita", "cadaDespesaUsuario", 'mesEscolhido', 'mesesSelect'));
+        return view("sistema.index", compact("usuario", "menu", "totalReceita", 'tiposReceitas', "totalDespesa", "tipoDespesa", "porcentagemDespesaReceita", "cadaDespesaUsuario", 'mesEscolhido', 'mesesSelect', 'mensagem', 'classe', 'display'));
     }
 
-    public function atualizar(Request $request) {
-        echo 'teste';
-    }
+
 }
