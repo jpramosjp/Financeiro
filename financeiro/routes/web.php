@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\DespesaController;
+use App\Http\Controllers\DinheiroController;
 use App\Http\Controllers\SistemaController;
 use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\Receitascontroller;
+use App\Http\Controllers\ReceitasController;
+use App\Models\Despesa;
+use App\Models\Dinheiro;
 use App\Models\Receitas;
 use Illuminate\Support\Facades\Route;
 
@@ -36,22 +40,44 @@ Route::post('/logout',[UsuarioController::class, 'logout'])
     ->name('logout');
 
 
-Route::get('/sistema.receitas', [Receitascontroller::class, 'index'])
+Route::get('/sistema.receitas', [ReceitasController::class, 'index'])
     ->name('controle_receita');
 
-Route::post('/sistema.receitas', [Receitascontroller::class, 'inserirReceita'])
+Route::post('/sistema.receitas', [ReceitasController::class, 'inserirReceita'])
 ->name('inserir_receita');
 
 
-Route::post('/sistema.inserirReceita', [Receitascontroller::class, 'atualizarReceita'])
+Route::post('/sistema.atualizarReceita', [ReceitasController::class, 'atualizarReceita'])
     ->name('atualizar_receitas');
 
-Route::delete('/sistema.receitas/{codigo}', [Receitascontroller::class, 'destroy'])
+Route::delete('/sistema.receitas/{codigo}', [ReceitasController::class, 'destroy'])
         ->name("deletar");
 
 
-Route::get('/sistema.despesa', [SistemaController::class, 'despesa'])
+
+Route::get('/sistema.despesa', [DespesaController::class, 'index'])
     ->name('controle_despesa');
 
-Route::get('/sistema.dinheiro', [SistemaController::class, 'dinheiro'])
+Route::post('/sistema.atualizarDespesa', [DespesaController::class, 'atualizarDespesa'])
+    ->name('atualizar_despesa');
+
+Route::post('/sistema.inserirDespesa', [DespesaController::class, 'inserirDespesa'])
+    ->name('inserir_despesa');
+
+Route::post('/sistema.pesquisaDespesa', [DespesaController::class, 'pesquisaDespesa'])
+    ->name('pesquisa_despesa');
+
+Route::delete('/sistema.despesa/{codigo}', [DespesaController::class, 'destroy'])
+    ->name("deletar_despesa");
+
+Route::get('/sistema.dinheiro', [DinheiroController::class, 'index'])
     ->name('controle_dinheiro');
+
+Route::post('/sistema.atualizarDinheiro', [DinheiroController::class, 'atualizarDinheiro'])
+    ->name('atualizar_dinheiro');
+
+Route::delete('/sistema.dinheiro/{codigo}', [DinheiroController::class, 'destroy'])
+    ->name("deletar_dinheiro");
+
+Route::post('/sistema.inserirDinheiro', [DinheiroController::class, 'inserirDinheiro'])
+    ->name('inserir_dinheiro');

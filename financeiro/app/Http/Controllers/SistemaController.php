@@ -6,6 +6,7 @@ use App\Repositories\ReceitasRepo;
 use App\Repositories\DespesaRepo;
 use Illuminate\Support\Facades\Number;
 use App\Http\Controllers\Menucontroller;
+use App\Repositories\DinheiroRepo;
 use App\Models\Meses;
 
 
@@ -35,16 +36,23 @@ class SistemaController extends Controller
 
         $receitasRepo = new ReceitasRepo;
         $despeRepo = new DespesaRepo;
+        $dinheiroRepo = new DinheiroRepo;
         $menu = Menucontroller::montarMenu($request);
 
         $retornoReceitas = $receitasRepo->receitasUsuario($usuario->codigo);
         $retornoDespesa = $despeRepo->despesaUsuario($usuario->codigo, $periodoVencimento);
-        $totalReceita = $totalDespesa = 0.00;
+        $retornoDinheiro = $dinheiroRepo->dinheiroUsuario($usuario->codigo);
+        $totalReceita = $totalDespesa = $totalDinheiroGuardado = 0.00;
         $codigoDespesa = [];
         $cadaDespesaUsuario = [];
         $tipoDespesa = [];
         $tiposReceitas = [];
         $porcentagemDespesaReceita = 0;
+        if(!empty($retornoDinheiro)) {
+            foreach($retornoDinheiro as $dados) {
+                $totalDinheiroGuardado += $dados->valor;
+            }
+        }
         if(!empty($retornoReceitas) && !empty($retornoDespesa)) {
             foreach($retornoReceitas as $dados) {
                 $totalReceita += $dados->valor;
@@ -55,14 +63,15 @@ class SistemaController extends Controller
                 $tipoDespesa[$dados->tipo_despesa] = [$dados->quantidade_despesa, $dados->cor];
                 $codigoDespesa[]= $dados->codigo_despesa; 
             }
-            $porcentagemDespesaReceita =  round(($totalDespesa * 100)/ $totalReceita, 2);
+            $contaRceita = $totalReceita == 0 ? 1 : $totalReceita;
+            $porcentagemDespesaReceita =  round(($totalDespesa * 100)/ $contaRceita, 2);
             $totalReceita = number_format($totalReceita, 2, ',', '.');
             $totalDespesa = number_format($totalDespesa, 2, ',', '.');
             $cadaDespesaUsuario = $despeRepo->cadaDespesaUuario($usuario->codigo, implode("," ,array_unique($codigoDespesa)), $periodoVencimento);
         }
        
         
-        return view("sistema.index", compact("usuario", "menu", "totalReceita", 'tiposReceitas', "totalDespesa", "tipoDespesa", "porcentagemDespesaReceita", "cadaDespesaUsuario", 'mesEscolhido', 'mesesSelect', 'mensagem', 'classe', 'display'));
+        return view("sistema.index", compact("usuario", "menu", "totalReceita", 'tiposReceitas', "totalDespesa", "tipoDespesa", "porcentagemDespesaReceita", "cadaDespesaUsuario", 'mesEscolhido', 'mesesSelect', 'mensagem', 'classe', 'display', 'totalDinheiroGuardado'));
     }
 
 

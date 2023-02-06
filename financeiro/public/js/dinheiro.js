@@ -1,20 +1,12 @@
 $(document).ready(function(){
-    
-
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    $("#select_receita").change(function(){
-        $("#form_descricao_receita").css("display", "none");
-       if($(this).val() == 3) {
-        $("#form_descricao_receita").css("display", "block");
-       }
-    });
     
 
-   $('.editar').click(function(e) {
+    $("#tabela_dinheiro tbody").on("click", ".editar", function(e) {
       e.preventDefault();
       const tr = $(this).closest('tr');
       const inputs = tr.find('input[type="text"]');
@@ -36,9 +28,9 @@ $(document).ready(function(){
     e.preventDefault();
     const tr = $(this).closest('tr');
     const inputs = tr.find('input[type="text"]');
-    tr.find('.valor-receita').val(tr.find('.valor_antigo').val());
-    tr.find('.tipo-receita').val(tr.find('.tipo_receita_antigo').val());
-  
+
+   
+    tr.find('.valor_dinheiro').val(tr.find('.valor_dinheiro_antigo').val());
     inputs.prop('readonly', true);
     inputs.css('pointer-events', 'none');
   
@@ -50,29 +42,26 @@ $(document).ready(function(){
     tr.find('.btn-success').removeClass('btn-success').addClass('btn-primary').removeClass('salvarEdicoes');
   });
 
+
+
   $(document).on('click', '.salvarEdicoes', function(e) {
     e.preventDefault();
     const tr = $(this).closest('tr');
+    const codigo = tr.data("dinheiro-id");
     const inputs = tr.find('input[type="text"]');
-    const codigoReceita = tr.find(".codigo_tipo_receita").val();
-    const codigo = tr.data("receita-id");
-    const tipoReceita = inputs.first().val();
-    var valor = inputs.last().val()
+    var valor = tr.find(".valor_dinheiro").val();
     
-    
-    var usuario = $("#codigo_usuario").val();
-    valor = parseFloat(valor.replace("R$ ", "").replace(".", "").replace(",", "."));
-    if((tr.find('.tipo_receita_antigo').val() == tipoReceita) && (valor == parseFloat(tr.find('.valor_antigo').val().replace("R$ ", "").replace(".", "").replace(",", ".")))) {
+    if(valor == tr.find('.valor_dinheiro_antigo').val()) {
         return true;
     }
+    var usuario = $("#codigo_usuario").val();
+    
 
      $.ajax({
         type: 'POST',
         url: $("#url").val(),
         data: {
             "codigo": codigo,
-            "codigoReceita": codigoReceita,
-            "tipoReceita": tipoReceita,
             "valor": valor,
             "usuario": usuario
         },
@@ -81,8 +70,7 @@ $(document).ready(function(){
             $("#alerta").text(response.mensagem);
             alerta();
             if(response.sucesso == 1) {
-                tr.find('.tipo_receita_antigo').val(tipoReceita)
-                tr.find('.valor_antigo').val(tr.find('.valor-receita').val());
+                tr.find('.valor_dinheiro_antigo').val(valor);
                 inputs.prop('readonly', true);
                 inputs.css('pointer-events', 'none');
             
@@ -94,7 +82,6 @@ $(document).ready(function(){
             
                 tr.find('.btn-success').text('Editar');
                 tr.find('.btn-success').removeClass('btn-success').addClass('btn-primary').removeClass('salvarEdicoes');
-                return true;
             }
             
         },
@@ -103,10 +90,6 @@ $(document).ready(function(){
         }
       });
   
-      return true;
  });
 });
 
-function layoutNormal(inputs) {
-   
-}

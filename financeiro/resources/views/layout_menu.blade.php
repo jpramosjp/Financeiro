@@ -5,7 +5,7 @@
             {{$mensagem}}
 </div>
     <div id= "menu-lateral" class="d-flex flex-column flex-shrink-0 p-3 text-white custom-gradient menu-lateral " style="width: 280px;">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <a href="/sistema" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <i class="fa-solid fa-money-bill-trend-up fa-2x p-1"></i>
         <span class="fs-4 mt-auto">Financeiro</span>
         </a>
@@ -39,7 +39,7 @@
         </ul>
         </div>
     </div>
-    <div id="content-wrapper" class="d-flex flex-column no-data">
+    <div id="content-wrapper" class="d-flex flex-column no-data w-100">
         <div id="content">
         
         <!-- Topbar -->

@@ -51,8 +51,8 @@
                         <input type="hidden" class="codigo_tipo_receita" value="{{$valor->codigo_tipo_receita}}">
                     </td>
                     <td> 
-                        <input type="text" id= "valor_receita_{{$valor->codigo}}" readonly= "true" class="valor-receita" value="{{number_format($valor->valor, 2, ',', '.')}}" onkeyup=" return formataValor(this)"  style="border: none; background-color: transparent; pointer-events: none;">
-                        <input type="hidden" class="valor_antigo" readonly= "true" value="{{number_format($valor->valor, 2, ',', '.')}}">
+                        <input type="text" id= "valor_receita_{{$valor->codigo}}" readonly= "true" class="valor-receita" value="{{number_format($valor->valor, 2, ',', '')}}" onkeyup=" return formataValor(this)"  style="border: none; background-color: transparent; pointer-events: none;">
+                        <input type="hidden" class="valor_antigo" readonly= "true" value="{{number_format($valor->valor, 2, ',', '')}}">
                     </td>
                     <td>
                         {{date("d/m/Y", strtotime($valor->data_inserido))}}
@@ -60,12 +60,13 @@
                     <td>
                     <div class="d-flex">
                         <button class="btn btn-primary mx-3 editar">Editar</button>
-                        <form></form>
+                        <form id= "form_excluir"></form>
                             <form  method="post" action="{{ route('deletar', $valor->codigo)}}">
                                 @csrf
                                 {{method_field('DELETE')}}
-                                <button type="submit" class="btn btn-danger ml-auto excluir">Excluir</button>
-                            </form>
+                                <button type="submit" class="btn btn-danger ml-auto excluir" style="display:block;">Excluir</button>
+                        </form>
+                        <button type="button" class="btn btn-secondary ml-auto cancelar" style="display:none;">Cancelar</button>
                     </div>
                     </td>
                 <tr>

@@ -9,7 +9,7 @@ use App\Repositories\ReceitasRepo;
 use Exception;
 use App\Http\Controllers\SessaoController;
 
-class Receitascontroller extends Controller
+class ReceitasController extends Controller
 {
     public function index(Request $request) {
         $receitasRepo = new ReceitasRepo;

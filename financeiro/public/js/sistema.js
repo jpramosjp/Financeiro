@@ -1,7 +1,6 @@
 
 $(document).ready(function() {
 
-
     if (window.innerWidth < 768) {
         document.getElementById("menu-lateral").classList.remove("no-data-menu");
         document.getElementById("content-wrapper").classList.remove("no-data");
@@ -111,13 +110,13 @@ $(document).ready(function() {
 
 
 function mostarOpcoes() {
-    if($("#seta_usuario").hasClass("show")) {
-        $("#seta_usuario").removeClass("show");
-        $("#opcoes_usuario").removeClass("show opcoes-cima");
-        return true;
-    }
-    $("#seta_usuario").addClass("show");
-    $("#opcoes_usuario").addClass("show opcoes-cima");
+    // if($("#seta_usuario").hasClass("show")) {
+    //     $("#seta_usuario").removeClass("show");
+    //     $("#opcoes_usuario").removeClass("show opcoes-cima");
+    //     return true;
+    // }
+    // $("#seta_usuario").addClass("show");
+    // $("#opcoes_usuario").addClass("show opcoes-cima");
     return true;
 }
 
