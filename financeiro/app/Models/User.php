@@ -12,7 +12,6 @@ class User extends Model
         'nome',
         'nome_acesso',
         'senha',
-        'cliente',
         'imagem_usuario',
         'data_nascimento'
     ];

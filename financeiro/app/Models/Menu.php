@@ -12,7 +12,8 @@ class Menu extends Model
     protected $table = 'menu';
     protected $fillable = [
         'nome',
-        'classe'
+        'classe',
+        'rota'
     ];
     
     public $timestamps = false;

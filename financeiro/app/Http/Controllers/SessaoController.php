@@ -11,7 +11,7 @@ class SessaoController extends Controller
      * @param Array $parametros
      * @return Bool 
     */
-    public function mensagemSessao(Request $request, $parametros) {
+    public static function mensagemSessao(Request $request, $parametros) {
         foreach($parametros as $indice => $valor) {
             $request->session()
                     ->flash(
@@ -21,7 +21,7 @@ class SessaoController extends Controller
         return true;
     }
 
-    public function criarSessaoUsuario(Request $request, $parametros) {
+    public static function criarSessaoUsuario(Request $request, $parametros) {
         foreach($parametros as $indice => $valor) {
             $request->session()
                     ->put(
