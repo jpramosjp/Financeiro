@@ -16,7 +16,7 @@ class DespesaRepo
                 A.codigo,
                 A.valor,
                 B.descricao as tipo_despesa,
-                (SELECT count(0) FROM despesa x WHERE x.tipo_despesa = B.codigo AND x.data_vencimento BETWEEN $periodo ) as quantidade_despesa,
+                (SELECT count(0) FROM despesa x WHERE x.tipo_despesa = B.codigo AND x.data_vencimento BETWEEN $periodo AND x.usuario = A.usuario ) as quantidade_despesa,
                 B.cor,
                 B.codigo as codigo_despesa,
                 A.nome_despesa,
